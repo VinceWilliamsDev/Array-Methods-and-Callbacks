@@ -125,10 +125,10 @@ Parameters:
 function getWinnersByYear(cbWin, cbYear, data) {
     const winners = cbWin(getFinals, data);
     const years = cbYear(getFinals, data);
-    console.log(winners);
+    console.log(winners); // verifying my callbacks worked
     console.log(years);
-    winners.forEach(function(game){
-        console.log(`In ${years[game]}, ${winners[game]} won the world cup!`);
+    winners.forEach(function(game, index){
+        console.log(`In ${years[index]}, ${game} won the world cup!`);
     });
 };
 
