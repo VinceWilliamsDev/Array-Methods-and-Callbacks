@@ -6,40 +6,111 @@ console.log('its working');
 
 /* Task 1: Investigate the data above. Practice accessing data by console.log-ing the following pieces of data 
 
-(a) Home Team name for 2014 world cup final
-(b) Away Team name for 2014 world cup final
-(c) Home Team goals for 2014 world cup final
-(d) Away Team goals for 2014 world cup final
-(e) Winner of 2014 world cup final */
+(a) Home Team name for 2014 world cup final */
+
+const homeTeam = fifaData.filter(function(game){
+    return (game["Year"] === 2014 && game["Stage"] === "Final");
+});
+
+console.log(homeTeam[0]["Home Team Name"]);
+
+// (b) Away Team name for 2014 world cup final
+
+const awayTeam = fifaData.filter(function(game){
+    return (game["Year"] === 2014 && game["Stage"] === "Final");
+});
+
+console.log(awayTeam[0]["Away Team Name"]);
+
+// (c) Home Team goals for 2014 world cup final
+
+const homeTeamGoals = fifaData.filter(function(game){
+    return (game["Year"] === 2014 && game["Stage"] === "Final");
+});
+
+console.log(homeTeamGoals[0]["Home Team Goals"]);
+
+// (d) Away Team goals for 2014 world cup final
+
+const awayTeamGoals = fifaData.filter(function(game){
+    return (game["Year"] === 2014 && game["Stage"] === "Final");
+});
+
+console.log(awayTeamGoals[0]["Away Team Goals"]);
+
+// (e) Winner of 2014 world cup final */
+
+const final = fifaData.filter(game => (game["Year"] === 2014 && game["Stage"] === "Final"));
+
+function whoWon(games) {
+    const winners = [];
+    let winCondition = [];
+    games.forEach(function(game) { 
+        console.log(game);
+        if (game["Home Team Goals"] > game["Away Team Goals"]) {
+            winners.push(game["Home Team Name"]); // did home team win on points
+
+        } else if (game["Home Team Goals"] < game["Away Team Goals"]){
+            winners.push(game["Away Team Name"]); // did away team win on points
+
+        } else if (game["Home Team Goals"] === game["Away Team Goals"]) { // in case of tie in regulation
+            winCondition = game["Win conditions"].split(" "); // parse the Win Conditions
+
+            if (winCondition.includes(game["Home Team Name"])) {
+                winners.push(game["Home Team Name"]); // home team won in over time
+
+            } else if (winCondition.includes(game["Away Team Name"])) {
+                winners.push(game["Away Team Name"]); // away team won in over time
+            } 
+        } else {
+            winners.push("Tie");
+        }; // game ended in a tie
+    });
+    return winners;
+};
+
+console.log("Task 1 part E")
+// console.log(final);
+console.log(whoWon(final));
 
 
 /* Task 2: Create a function called  getFinals that takes `data` as an argument and returns an array of objects with only finals data */
 
-function getFinals(/* code here */) {
+console.log("Task 2");
 
-    /* code here */
-
+function getFinals(data) {
+    const gameList = data.filter(game => game["Stage"] === "Final");
+    return gameList;
 };
 
+
+const fifaFinals = getFinals(fifaData);
+
+console.log(fifaFinals);
 /* Task 3: Implement a higher-order function called `getYears` that accepts the callback function `getFinals`, and returns an array called `years` containing all of the years in the dataset */
 
-function getYears(/* code here */) {
+console.log("Task 3");
 
-    /* code here */
-
+function getYears(cb, data) {
+    const games = cb(data);
+    let years = [];
+    games.forEach(game => years.push(game["Year"]));
+    return years;
 };
 
-getYears();
+console.log(getYears(getFinals, fifaData))
+
 
 /* Task 5: Implement a higher-order function called `getWinners`, that accepts the callback function `getFinals()` and determine the winner (home or away) of each `finals` game. Return the name of all winning countries in an array called `winners` */ 
 
-function getWinners(/* code here */) {
+// function getWinners(cb, data) {
+//     const games = cb(data);
+//     const winners = [];
+//     games.forEach(function(gameWin))
+//     games.forEach(game => years.push(game))
+// };
 
-    /* code here */
-
-};
-
-getWinners();
+// getWinners();
 
 /* Task 6: Implement a higher-order function called `getWinnersByYear` that accepts the following parameters and returns a set of strings "In {year}, {country} won the world cup!" 
 
